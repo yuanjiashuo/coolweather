@@ -22,7 +22,11 @@ public class Utility {
         try {
             JSONArray allProvinces = new JSONArray(response); for (int i = 0; i < allProvinces.length(); i++) {
 
-                JSONObject provinceObject = allProvinces.getJSONObject(i); Province province = new Province(); province.setProvinceName(provinceObject.getString("name")); province.setProvinceCode(provinceObject.getInt("id")); province.save();
+                JSONObject provinceObject = allProvinces.getJSONObject(i);
+                Province province = new Province();
+                province.setProvinceName(provinceObject.getString("name"));
+                province.setProvinceCode(provinceObject.getInt("id"));
+                province.save();
             }
             return true;
         } catch (JSONException e) {
@@ -87,9 +91,10 @@ public class Utility {
 
      */
 
-    public static Weather handleWeatherResponse(String response) { try {
+    public static Weather handleWeatherResponse(String response) {
+        try {
         JSONObject jsonObject = new JSONObject(response);
-        JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+        JSONArray jsonArray = jsonObject.getJSONArray("HeWeather6");
         String weatherContent = jsonArray.getJSONObject(0).toString();
         return new Gson().fromJson(weatherContent, Weather.class);
 
