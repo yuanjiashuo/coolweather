@@ -2,6 +2,7 @@ package com.example.coolweather;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,6 +28,9 @@ public class LoginActivity extends AppCompatActivity {
     private String psd;
     public String username;
     public String mpassword;
+    public String mphonenumber;
+    private Boolean a=false;
+    private Boolean b=true;
 
     EventHandler eventHandler;
     private EditText edit_phone;
@@ -36,28 +40,15 @@ public class LoginActivity extends AppCompatActivity {
     private Button bt_login;
     private String cord_number;
     private String phone_number;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_login);
-        //数据库操作
-        helper = new DBHelper(this, "USERS.db", null, 1);
-        final SQLiteDatabase database = helper.getReadableDatabase();
-
-
-        Cursor cursor = database.rawQuery("select * from DATA", null);
-        if (cursor.moveToFirst()) {
-            do {
-                //从数据库获取到用户名、密码
-                number = cursor.getString(cursor.getColumnIndex("number"));
-                psd = cursor.getString(cursor.getColumnIndex("password"));
-            } while (cursor.moveToNext());
-            //关闭游标
-            cursor.close();
-        }
         initViews2();
         sms_verification();
     }
+
     /*public void initViews1() {
         user = findViewById(R.id.number);
         password = findViewById(R.id.password);
@@ -77,27 +68,46 @@ public class LoginActivity extends AppCompatActivity {
         });
     }*/
     public void sureuser(String username, String mpassword) {
-        if (username.equals(number) && mpassword.equals(psd)) {
+        //数据库操作
+        helper = new DBHelper(this, "USERS.db", null, 1);
+        final SQLiteDatabase database = helper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select * from DATA", null);
+        if (cursor.moveToFirst()) {
+            do {
+                //从数据库获取到用户名、密码
+                number = cursor.getString(cursor.getColumnIndex("number"));
+                psd = cursor.getString(cursor.getColumnIndex("password"));
+                if (username.equals(number) && mpassword.equals(psd)) {
+                    a = true;
+                    //提示
+                }
+            } while (cursor.moveToNext());
+            //关闭游标
+            cursor.close();
+        }
+        if (a.equals(true)) {
             //账号密码校验正确
             // 登陆成功，跳转的用户界面
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             MyApplication application = (MyApplication) this.getApplicationContext();
             application.setNumber(1);
             application.setUser(username);
-            Log.d("user是",application.getUser());
+            Log.d("user是", application.getUser());
             startActivity(intent);
             Toast.makeText(LoginActivity.this, "验证码输入正确,登陆成功", Toast.LENGTH_LONG).show();
-            //提示
-        } else {
-            Toast.makeText(LoginActivity.this, "手机号/密码错误！", Toast.LENGTH_LONG).show();
+            finish();
         }
+        else
+            Toast.makeText(LoginActivity.this, "手机号/密码错误！", Toast.LENGTH_LONG).show();
     }
+
     public void initViews2() {
         edit_phone = (EditText) findViewById(R.id.number); //你的手机号
         edit_cord = (EditText) findViewById(R.id.ed_code);//你的验证码
         bt_getphonecore = (Button) findViewById(R.id.bt_getphonecore);
         bt_login = (Button) findViewById(R.id.bt_login);
         password = findViewById(R.id.password);
+        user = findViewById(R.id.number);
         bt_getphonecore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,10 +126,32 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        Button zhuce = (Button) findViewById(R.id.zhuce);
+        zhuce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity.this.startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                finish();
+            }
+        });
     }
 
     private boolean judPhone() {//判断手机号是否正确
         //不正确的情况
+        mphonenumber = user.getText().toString().trim();
+        helper = new DBHelper(this, "USERS.db", null, 1);
+        final SQLiteDatabase database = helper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select * from DATA", null);
+        if (cursor.moveToFirst()) {
+            do {
+                //从数据库获取到用户名、密码
+                number = cursor.getString(cursor.getColumnIndex("number"));
+                if (mphonenumber.equals(number))
+                    b = false;
+            } while (cursor.moveToNext());
+            //关闭游标
+            cursor.close();
+        }
         if (TextUtils.isEmpty(edit_phone.getText().toString().trim()))//对于字符串处理Android为我们提供了一个简单实用的TextUtils类，如果处理比较简单的内容不用去思考正则表达式不妨试试这个在android.text.TextUtils的类，主要的功能如下:
         //是否为空字符 boolean android.text.TextUtils.isEmpty(CharSequence str)
         {
@@ -130,8 +162,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "您的电话号码位数不正确", Toast.LENGTH_LONG).show();
             edit_phone.requestFocus();
             return false;
+        }else if (b.equals(true)) {
+            Toast.makeText(LoginActivity.this, "手机号未注册", Toast.LENGTH_LONG).show();
+            return false;
         }
-
         //正确的情况
         else {
             phone_number = edit_phone.getText().toString().trim();

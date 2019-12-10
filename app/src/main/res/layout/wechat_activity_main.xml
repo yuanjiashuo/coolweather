@@ -14,7 +14,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="40dp"
+            android:background="#00BFFF">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -31,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="#00BFFF"
                 >
 
                 <TextView
@@ -39,7 +41,8 @@
                     android:id="@+id/textView_topTitle"
                     android:textSize="18dp"
                     android:layout_gravity="center_vertical"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:background="#00BFFF"/>
             </LinearLayout>
 
             <LinearLayout
@@ -52,7 +55,8 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"></LinearLayout>
+                    android:layout_weight="1"
+                    ></LinearLayout>
 
 
             </LinearLayout>
@@ -74,51 +78,56 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_gravity="bottom">
+            android:layout_gravity="bottom"
+            android:background="#FFFFF0">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="微信"
+                android:text="地图"
                 android:id="@+id/textView_control"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:textSize="20dp"
                 android:layout_marginLeft="10dp"
                 android:textAlignment="center"
+                android:background="#FFFFF0"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="通讯录"
+                android:text="天气"
                 android:id="@+id/textView_oversee"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:textSize="20dp"
                 android:textAlignment="center"
+                android:background="#FFFFF0"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="发现"
+                android:text="功能"
                 android:id="@+id/textView_over"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:textSize="20dp"
                 android:textAlignment="center"
+                android:background="#FFFFF0"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我的"
+                android:text="我"
                 android:id="@+id/textView_connectDevice"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:textSize="20dp"
                 android:layout_marginRight="10dp"
                 android:textAlignment="center"
+                android:background="#FFFFF0"
                 />
         </LinearLayout>
 

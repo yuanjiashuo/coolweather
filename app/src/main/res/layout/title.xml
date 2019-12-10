@@ -5,12 +5,15 @@
     <Button
 
         android:id="@+id/nav_button"
-        android:layout_width="30dp"
+        android:layout_width="50dp"
         android:layout_height="30dp"
         android:layout_marginLeft="10dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/city"/>
+        android:text="城市"
+        android:textSize="20dp"
+        android:textColor="#F8F8FF"
+        android:background="#00000000"/>
 
     <TextView
         android:id="@+id/title_city"

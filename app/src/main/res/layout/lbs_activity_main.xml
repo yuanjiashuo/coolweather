@@ -9,7 +9,7 @@
 
         android:id="@+id/position_text_view"
         android:layout_width="wrap_content"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         android:background="@drawable/d"/>
 
     <com.baidu.mapapi.map.MapView

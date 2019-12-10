@@ -8,7 +8,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.coolweather.R;
@@ -26,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView text_Over;
     private TextView text_connectDevice;
     private TextView topTitle;
-
+    private long exitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,37 +75,53 @@ public class MainActivity extends AppCompatActivity {
         public void onPageSelected(int arg0) {
             switch (arg0) {//状态改变时底部对应的字体颜色改变
                 case 0:
-                    text_Control.setTextColor(Color.GREEN);
+                    text_Control.setTextColor(Color.GRAY);
                     text_Oversee.setTextColor(Color.BLACK);
                     text_Over.setTextColor(Color.BLACK);
                     text_connectDevice.setTextColor(Color.BLACK);
-                    topTitle.setText("微信");
+                    topTitle.setText("地图");
+
                     break;
                 case 1:
                     text_Control.setTextColor(Color.BLACK);
-                    text_Oversee.setTextColor(Color.GREEN);
+                    text_Oversee.setTextColor(Color.GRAY);
                     text_Over.setTextColor(Color.BLACK);
                     text_connectDevice.setTextColor(Color.BLACK);
-                    topTitle.setText("通讯录");
+                    topTitle.setText("天气");
                     break;
                 case 2:
                     text_Control.setTextColor(Color.BLACK);
                     text_Oversee.setTextColor(Color.BLACK);
-                    text_Over.setTextColor(Color.GREEN);
+                    text_Over.setTextColor(Color.GRAY);
                     text_connectDevice.setTextColor(Color.BLACK);
-                    topTitle.setText("发现");
+                    topTitle.setText("功能");
                     break;
                 case 3:
                     text_Control.setTextColor(Color.BLACK);
                     text_Oversee.setTextColor(Color.BLACK);
                     text_Over.setTextColor(Color.BLACK);
-                    text_connectDevice.setTextColor(Color.GREEN);
-                    topTitle.setText("我的");
+                    text_connectDevice.setTextColor(Color.GRAY);
+                    topTitle.setText("我");
                     break;
             }
 
         }
 
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK&&event.getRepeatCount()==0){
+            if(System.currentTimeMillis()-exitTime>1500){
+                Toast.makeText(this, "再点击一次返回", Toast.LENGTH_SHORT).show();
+                exitTime=System.currentTimeMillis();
+                Log.i("---", "jin ru if zhong");
+            }else{
+                Log.i("--s-", "jin ru else zhong");
+                this.finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

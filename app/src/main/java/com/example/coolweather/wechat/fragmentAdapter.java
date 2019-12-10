@@ -32,5 +32,9 @@ public class fragmentAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return mlist.size();//有几个页面
     }
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        //super.destroyItem(container, position, object);
+    }
 }
 

@@ -57,7 +57,8 @@ public class lbsmainactivity extends AppCompatActivity {
 
             String [] permissions = permissionList.toArray(new String[permissionList. size()]);
             ActivityCompat.requestPermissions(lbsmainactivity.this, permissions, 1);
-        } else { requestLocation();
+        } else {
+            requestLocation();
         }
     }
     private void requestLocation() {
@@ -69,6 +70,7 @@ public class lbsmainactivity extends AppCompatActivity {
         LocationClientOption option = new LocationClientOption();
         option.setCoorType("bd09ll");
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        option.setScanSpan(3000);
         option.setIsNeedAddress(true);
         mLocationClient.setLocOption(option);
 
@@ -129,9 +131,12 @@ public class lbsmainactivity extends AppCompatActivity {
                     positionText.setText(currentPosition);
                 }
             });
-            if (location.getLocType() == BDLocation.TypeGpsLocation
-                    || location.getLocType() == BDLocation.TypeNetWorkLocation) {
-                navigateTo(location);
+            while (true)
+            {
+                if (location.getLocType() == BDLocation.TypeGpsLocation
+                        || location.getLocType() == BDLocation.TypeNetWorkLocation) {
+                    navigateTo(location);
+                }
             }
         }
     }
